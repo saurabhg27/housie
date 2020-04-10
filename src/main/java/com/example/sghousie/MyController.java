@@ -37,9 +37,9 @@ public class MyController {
 	}
 	
 	@GetMapping("/map")
-	public Map<Integer,Boolean> getCompleteStatus(){
-		System.out.println("returning map");
-		return HousieBoard.getMap();
+	public Map<Integer,String> getCompleteStatus(){
+		
+		return HousieBoard.getLastUpdatedMap();
 	}
 	
 	@PostMapping("/generate")
@@ -50,7 +50,7 @@ public class MyController {
 			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
 			String thisTimeNumber = jsonData.get("number");
 			Integer numbe = Integer.parseInt(thisTimeNumber);
-			HousieBoard.add(numbe);
+			HousieBoard.addToBoth(numbe);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

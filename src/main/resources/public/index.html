@@ -72,16 +72,19 @@ function myCallback(a, b)
 
 function renderTable(map){
 
-//console.log(map);
+console.log(map);
 for (var key in map) {
   if (map.hasOwnProperty(key)) {
     var val = map[key];
 	//console.log(key);
     //console.log(val);
-	if(val==true){
+	if(val=="true"){
 		$('td.cell' + key).addClass('selected');
 	}
   }
+  var l5=map[998];
+  console.log(l5);
+  $("#last5").html(l5);
 }
 
 }
@@ -90,7 +93,7 @@ for (var key in map) {
 </head>
 <body>
 <h1>HOUSIE</h1>
-
+<div id="last5">last 5</div><br>
 <div class="numbersTable">
         <table>
             <tbody><tr>
