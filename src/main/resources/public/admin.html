@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<script src="jquery-3.5.0.min.js"></script>
+<script>
+console.log("LOADED");
+$(document).ready(function(){
+  $("#generateBut").click(function(){
+    
+	console.log("Generate CLICKED");	
+	var numberIpVal = $("#numberInput").val();
+	console.log(numberIpVal);
+	$.ajax({
+		type: 'POST',
+		url: '/generate',
+		data: JSON.stringify ({number: numberIpVal}),
+		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+		success: function(data) { console.log("success "+numberIpVal); },
+		contentType: "application/json",
+		dataType: 'json'
+	});
+	
+  });
+});
+
+</script>
+</head>
+<body>
+<h1>HELLO WORLD</h1>
+<p id="test">bla</p>
+<input type="text" id="numberInput">
+<button id="generateBut">Generate !!</button>
+</body>
+</html>
