@@ -34,7 +34,7 @@
         }
 
     </style>
-<script src="jquery-3.5.0.min.js"></script>
+<script src="/housie/jquery-3.5.0.min.js"></script>
 <script>
 console.log("LOADED");
 $(document).ready(function(){
@@ -52,7 +52,7 @@ $(document).ready(function(){
 
 });
 
-var intervalID = window.setInterval(myCallback, 10000, 'Parameter 1', 'Parameter 2');
+var intervalID = window.setInterval(myCallback, 2000, 'Parameter 1', 'Parameter 2');
 
 function myCallback(a, b)
 {
@@ -83,7 +83,7 @@ for (var key in map) {
 	}
   }
   var l5=map[998];
-  console.log(l5);
+  //console.log(l5);
   $("#last5").html(l5);
 }
 
