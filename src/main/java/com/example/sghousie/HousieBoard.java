@@ -36,7 +36,7 @@ public class HousieBoard {
 		doneNumbers = new ConcurrentHashMap<>(100);
 		lastUpdatedMap = new HashMap<>();
 		
-		secretKey = System.getProperty("secretKey");
+		secretKey = System.getenv("secretKey");
 		System.out.println("secret key loaded is : "+secretKey);
 		 for(int i=1;i<=90;i++) {
 			 doneNumbers.put(i, "false");
@@ -94,6 +94,7 @@ public class HousieBoard {
 			if(secretKey.equals(key)){
 				init();
 				status = "reset ho gaya board";
+				saveBoardStatus();
 			} else {
 				status = "key galat hai bhai";
 			}
