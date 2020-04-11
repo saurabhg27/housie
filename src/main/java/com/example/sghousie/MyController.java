@@ -68,6 +68,32 @@ public class MyController {
 
 	}
 	
+	@PostMapping("/deleteNum")
+	public Map<String,String> deleteNum(@RequestBody String data) {
+		Map<String,String> map = new HashMap<String, String>();
+
+		String statusMessage = "Some error while auto generating";
+		try {
+			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
+			String thisTimeNumber = jsonData.get("number");
+			
+			if(thisTimeNumber==null||thisTimeNumber.isBlank()) {
+				statusMessage = "koi number nahi daala, dhyaan se number daalo bhai";	
+			} else {
+				Integer number = Integer.parseInt(thisTimeNumber);
+				String key = jsonData.get("key");
+				System.out.println("key is "+key);
+				statusMessage=HousieBoard.deleteNumber(number,key);	
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		map.put("resp", statusMessage);
+		return map;
+		
+	}
+	
 	@PostMapping("/autoGenerate")
 	public Map<String,String> autoGenerateNumber(@RequestBody String data) {
 		Map<String,String> map = new HashMap<String, String>();

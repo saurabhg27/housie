@@ -78,6 +78,22 @@ $(document).ready(function(){
   
   });
   
+  $("#delNumBut").click(function(){
+	var secKey = $("#secretKey").val();
+	var toBeDelNumber = prompt("Enter number to be deleted");
+	$.ajax({
+		type: 'POST',
+		url: '/housie/deleteNum',
+		data: JSON.stringify ({number: toBeDelNumber,key:secKey}),
+		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+		success: function(response) { 
+			//console.log("success "+response); 
+			$("#generateStatus").html(response["resp"]);
+		},
+		contentType: "application/json",
+		dataType: 'json'
+	});
+  });
   
 });
 
@@ -89,6 +105,8 @@ Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret K
 <input type="text" id="numberInput" placeholder="Number">
 <button id="generateBut">Generate !!</button>
 <div id="generateStatus"></div>
+<br><br>
+<button id="delNumBut">Delete Number !!</button>
 <br><br>
 <div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
 <br><br>

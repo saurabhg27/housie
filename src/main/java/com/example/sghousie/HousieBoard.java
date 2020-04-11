@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class HousieBoard {
 	private static List<Integer> generateList ;
@@ -42,10 +41,15 @@ public class HousieBoard {
 		random = new Random();
 		
 		secretKey = System.getenv("secretKey");
+		if(secretKey==null||secretKey.isBlank()) {
+			secretKey = "bla";
+		}
 		System.out.println("secret key loaded is : "+secretKey);
 		 for(int i=1;i<=90;i++) {
 			 doneNumbers.put(i, "false");
 		 }
+		 
+		 updateLastUpdatedMap();
 	}
 
 	public static synchronized String addToBoth(int num,String key) {
@@ -154,9 +158,29 @@ public class HousieBoard {
 	}
 
 	public static String autoGenerate(String key) {
-		List<Integer> allNosList = IntStream.rangeClosed(1, 90).boxed().collect(Collectors.toList());
-		int num = 9;
+
+		List<Integer> remainingNos = doneNumbers.entrySet().stream().filter(e->e.getValue().equalsIgnoreCase("false")).map(e->e.getKey()).collect(Collectors.toList());
+		System.out.println("Numbers remaining = "+remainingNos.size());
+		if(remainingNos.size()<=0) {
+			return "No remaining numbers";
+		}
+		int num = remainingNos.get(new Random().nextInt(remainingNos.size())); 
+		System.out.println("Random number generated is "+num);
 		return addToBoth(num, key);
 	}
-	
+
+	public static String deleteNumber(Integer number, String key) {
+		if(!secretKey.equals(key)) {
+			return "ERROR: Wrong key entered, jyada shhanpatti nahi ( ͡° ͜ʖ ͡°)";
+		}
+		
+		if(doneNumbers.get(number).equalsIgnoreCase("false")) {
+			return "number is not added yet = " + number;
+		}
+		doneNumbers.put(number, "false");
+		generateList.remove(generateList.indexOf(number));
+		System.out.println("deleted number : "+number);
+		return "deleted number :"+number;
+	}
+
 }
