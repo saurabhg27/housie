@@ -9,26 +9,60 @@ $(document).ready(function(){
     
 	console.log("Generate CLICKED");	
 	var numberIpVal = $("#numberInput").val();
-	console.log(numberIpVal);
+	var secKey = $("#secretKey").val();
+	console.log(numberIpVal,secKey);
 	$.ajax({
 		type: 'POST',
 		url: '/housie/generate',
-		data: JSON.stringify ({number: numberIpVal}),
+		data: JSON.stringify ({number: numberIpVal,key:secKey}),
 		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-		success: function(data) { console.log("success "+numberIpVal); },
+		success: function(response) { 
+			//console.log("success "+response); 
+			$("#generateStatus").html(response["resp"]);
+		},
 		contentType: "application/json",
 		dataType: 'json'
 	});
 	
   });
+  
+  $("#resetBoard").click(function(){
+	console.log("reset clicked ")
+	
+	var secretKey = prompt("Enter Secret Key");
+	
+	$.ajax({
+		type: 'POST',
+		url: '/housie/resetBoard',
+		data: JSON.stringify ({key: secretKey}),
+		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+		success: function(response) { 
+			//console.log("success resetBoard",response); 
+			alert(response["resp"])
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR,textStatus, errorThrown);
+			//alert("Unable to Reset Board");
+		},
+		contentType: "application/json",
+		dataType: 'json'
+	});
+  
+  
+  });
+  
+  
 });
 
 </script>
 </head>
 <body>
-<h1>HELLO WORLD</h1>
-<p id="test">bla</p>
-<input type="text" id="numberInput">
+<h1>HOUSIE ADMIN</h1>
+Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key"><br><br><br>
+<input type="text" id="numberInput" placeholder="Number">
 <button id="generateBut">Generate !!</button>
+<div id="generateStatus"></div>
+<br><br><br><br>
+<div><button id="resetBoard">Reset The Game</button></div>
 </body>
 </html>

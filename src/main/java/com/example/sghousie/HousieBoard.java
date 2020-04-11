@@ -1,47 +1,64 @@
 package com.example.sghousie;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 public class HousieBoard {
-	private static List<Integer> generateList = new ArrayList<>();
+	private static List<Integer> generateList ;
 	
-	private static Map<Integer,String> doneNumbers = new ConcurrentHashMap<>(100);
+	private static Map<Integer,String> doneNumbers;
 	
 	private static Map<Integer,String> lastUpdatedMap;
+	private static String secretKey;
 	
 	static {
 		init();
+		reloadfromDisk();
+		
+		Runnable hook = ()->{saveBoardStatus();};
+		Runtime.getRuntime().addShutdownHook(new Thread(hook));
 	}
 	
 	public static void main(String[] args) {
+		reloadfromDisk();
 		System.out.println(doneNumbers);
 	}
 	
 	private static void init() {
+		generateList = new ArrayList<>();
+		doneNumbers = new ConcurrentHashMap<>(100);
+		lastUpdatedMap = new HashMap<>();
 		
+		secretKey = System.getProperty("secretKey");
+		System.out.println("secret key loaded is : "+secretKey);
 		 for(int i=1;i<=90;i++) {
 			 doneNumbers.put(i, "false");
 		 }
-		 addToBoth(1);
-		 addToBoth(5);
-		 addToBoth(67);
-		 addToBoth(78);
 	}
 
-	public static void addToBoth(int num) {
+	public static synchronized String addToBoth(int num,String key) {
 		if(num<1 || num >90) {
 			System.out.println("invalid num in add to both : "+num);
-			return;
+			return "ERROR: Number should be between 1 - 90";
+		}
+		if(!secretKey.equals(key)) {
+			return "ERROR: Wrong key entered, jyada shhanpatti nahi ( ͡° ͜ʖ ͡°)";
 		}
 		System.out.println("------ adding number : "+num+"------");
+		if(doneNumbers.get(num).equalsIgnoreCase("true")) {
+			return "Number is already added "+ num;
+		}
 		generateList.add(num);
 		doneNumbers.put(num, "true");
 		updateLastUpdatedMap();
+		return "Added number : "+num;
 	}
 	
 	public static Map<Integer,String> getLastUpdatedMap() {
@@ -68,4 +85,66 @@ public class HousieBoard {
 		}
 	}
 
+	public static String resetBoard(String key) {
+		
+		System.out.println("secretkey: "+secretKey+" userKey: "+key);
+		String status="Unknown error";
+		
+		try {
+			if(secretKey.equals(key)){
+				init();
+				status = "reset ho gaya board";
+			} else {
+				status = "key galat hai bhai";
+			}
+				
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		return status;
+	}
+
+	private static void saveBoardStatus() {
+		try {
+			FileOutputStream fos = new FileOutputStream("board.bin");
+			ObjectOutputStream oo = new ObjectOutputStream(fos);
+			oo.writeObject(doneNumbers);
+			oo.close();
+			fos.close();
+			
+			FileOutputStream fos2 = new FileOutputStream("numberOrder.bin");
+			ObjectOutputStream oo2= new ObjectOutputStream(fos2);
+			oo2.writeObject(generateList);
+			oo2.close();
+			fos2.close();
+			
+			System.out.println("Saved both to disk");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void reloadfromDisk() {
+		try {
+		FileInputStream fis = new FileInputStream("board.bin");
+		ObjectInputStream oo = new ObjectInputStream(fis);
+		doneNumbers = (Map<Integer, String>) oo.readObject();
+		System.out.println("Loaded form disk doneNumbers"+doneNumbers.getClass()+" val --> "+doneNumbers);
+		oo.close();
+		fis.close();
+		
+		FileInputStream fis2 = new FileInputStream("numberOrder.bin");
+		ObjectInputStream oo1 = new ObjectInputStream(fis2);
+		generateList=(List<Integer>) oo1.readObject();
+		System.out.println("Loaded form disk generateList"+generateList.getClass()+" val --> "+generateList);
+		oo1.close();
+		fis2.close();
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			init();
+		}
+	}
+	
 }

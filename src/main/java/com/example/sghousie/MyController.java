@@ -37,17 +37,55 @@ public class MyController {
 	}
 	
 	@PostMapping("/generate")
-	public void takeAnInputNumber(@RequestBody String data)	{
+	public Map<String,String> takeAnInputNumber(@RequestBody String data)	{
+		Map<String,String> map = new HashMap<String, String>();
+
+		String statusMessage = "Some error while adding number";
 
 		System.out.println("got data "+data);
 		try {
 			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
 			String thisTimeNumber = jsonData.get("number");
-			Integer numbe = Integer.parseInt(thisTimeNumber);
-			HousieBoard.addToBoth(numbe);
+			if(thisTimeNumber==null||thisTimeNumber.isBlank()) {
+				statusMessage = "koi number nahi daala, dhyaan se number daalo bhai";	
+			} else {
+				Integer numbe = Integer.parseInt(thisTimeNumber);
+
+				String userKey = jsonData.get("key");
+				if(userKey==null||userKey.isBlank()) {
+					statusMessage = "No Key Found, please put key in box, mazak nahi chal raha idhar ( ͠° ͟ʖ ͡°)";
+				} else {
+					statusMessage=HousieBoard.addToBoth(numbe,userKey);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+
+		map.put("resp", statusMessage);
+		return map;
+
+	}
+	
+	@PostMapping("/resetBoard")
+	public Map<String,String> resetBoard(@RequestBody String data) {
+		Map<String,String> map = new HashMap<String, String>();
+
+		String statusMessage = "Some error while resetting";
+		System.out.println("got data "+data);
+		try {
+			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
+			String key = jsonData.get("key");
+			System.out.println("key is "+key);
+			
+			statusMessage=HousieBoard.resetBoard(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		map.put("resp", statusMessage);
+		return map;
 		
 	}
 	
