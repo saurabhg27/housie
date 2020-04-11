@@ -5,6 +5,17 @@
 <script>
 console.log("LOADED");
 $(document).ready(function(){
+
+	window.onbeforeunload = function (e) {
+        e = e || window.event;
+        var returnString = 'Are you sure?';
+        if (e) {
+            e.returnValue = returnString;
+        }
+        return returnString;
+	};
+
+
   $("#generateBut").click(function(){
     
 	console.log("Generate CLICKED");	

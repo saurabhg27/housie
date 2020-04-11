@@ -6,8 +6,8 @@
             text-align: center;
         }
 
-        .bigNumberDisplay {
-            font-size: 6em;
+        .last5 {
+            font-size: 1.5em;
         }
 
         .numbersTable {
@@ -36,19 +36,11 @@
     </style>
 <script src="/housie/jquery-3.5.0.min.js"></script>
 <script>
-console.log("LOADED");
+
 $(document).ready(function(){
 
-
-	window.onbeforeunload = function (e) {
-                e = e || window.event;
-                var returnString = 'Are you sure?';
-                if (e) {
-                    e.returnValue = returnString;
-                }
-                return returnString;
-            };
-
+console.log("LOADED");
+	
 
 });
 
@@ -93,7 +85,7 @@ for (var key in map) {
 </head>
 <body>
 <div><h1>HOUSIE</h1></div>
-<div>Last 5:<div id="last5">last 5</div></div><br>
+<div class="last5">Last 5:<div id="last5">last 5</div></div><br>
 <div class="numbersTable">
         <table>
             <tbody><tr>
