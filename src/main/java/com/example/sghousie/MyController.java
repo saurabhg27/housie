@@ -4,19 +4,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
-@RequestMapping("/housie")
+@RequestMapping("/")
 public class MyController {
 	
 	Random r = new Random();
@@ -26,12 +24,7 @@ public class MyController {
 	 TypeReference<HashMap<String,String>> typeRef 
 	            = new TypeReference<HashMap<String,String>>() {};
 
-	@RequestMapping("/")
-	public String test() {
-		return "housie.html";
-	}
-	
-	@GetMapping("/status")
+	@GetMapping("/test")
 	public String lastStatus() {
 		int number = r.nextInt(89)+1;
 		return ""+number;
