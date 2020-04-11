@@ -72,6 +72,10 @@ for (var key in map) {
     //console.log(val);
 	if(val=="true"){
 		$('td.cell' + key).addClass('selected');
+		
+	}
+	if(val=="false"){
+		$('td.cell' + key).removeClass('selected');
 	}
   }
   var l5=map[998];

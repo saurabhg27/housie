@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HousieBoard {
 	private static List<Integer> generateList ;
@@ -16,6 +19,7 @@ public class HousieBoard {
 	private static Map<Integer,String> doneNumbers;
 	
 	private static Map<Integer,String> lastUpdatedMap;
+	private static Random random;
 	private static String secretKey;
 	
 	static {
@@ -35,6 +39,7 @@ public class HousieBoard {
 		generateList = new ArrayList<>();
 		doneNumbers = new ConcurrentHashMap<>(100);
 		lastUpdatedMap = new HashMap<>();
+		random = new Random();
 		
 		secretKey = System.getenv("secretKey");
 		System.out.println("secret key loaded is : "+secretKey);
@@ -146,6 +151,12 @@ public class HousieBoard {
 			e.printStackTrace();
 			init();
 		}
+	}
+
+	public static String autoGenerate(String key) {
+		List<Integer> allNosList = IntStream.rangeClosed(1, 90).boxed().collect(Collectors.toList());
+		int num = 9;
+		return addToBoth(num, key);
 	}
 	
 }

@@ -37,6 +37,22 @@ $(document).ready(function(){
 	
   });
   
+  $("#autoGenerateButton").click(function(){
+	var secKey = $("#secretKey").val();
+	$.ajax({
+		type: 'POST',
+		url: '/housie/autoGenerate',
+		data: JSON.stringify ({key:secKey}),
+		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+		success: function(response) { 
+			//console.log("success "+response); 
+			$("#generateStatus").html(response["resp"]);
+		},
+		contentType: "application/json",
+		dataType: 'json'
+	});
+  });
+  
   $("#resetBoard").click(function(){
 	console.log("reset clicked ")
 	
@@ -73,7 +89,9 @@ Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret K
 <input type="text" id="numberInput" placeholder="Number">
 <button id="generateBut">Generate !!</button>
 <div id="generateStatus"></div>
-<br><br><br><br>
+<br><br>
+<div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
+<br><br>
 <div><button id="resetBoard">Reset The Game</button></div>
 </body>
 </html>

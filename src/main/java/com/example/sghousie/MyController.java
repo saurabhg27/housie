@@ -68,6 +68,25 @@ public class MyController {
 
 	}
 	
+	@PostMapping("/autoGenerate")
+	public Map<String,String> autoGenerateNumber(@RequestBody String data) {
+		Map<String,String> map = new HashMap<String, String>();
+
+		String statusMessage = "Some error while auto generating";
+		try {
+			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
+			String key = jsonData.get("key");
+			System.out.println("key is "+key);
+			statusMessage=HousieBoard.autoGenerate(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		map.put("resp", statusMessage);
+		return map;
+
+	}
+	
+	
 	@PostMapping("/resetBoard")
 	public Map<String,String> resetBoard(@RequestBody String data) {
 		Map<String,String> map = new HashMap<String, String>();
