@@ -34,6 +34,10 @@ public class HousieBoard {
 	}
 
 	public static void addToBoth(int num) {
+		if(num<1 || num >90) {
+			System.out.println("invalid num in add to both : "+num);
+			return;
+		}
 		System.out.println("------ adding number : "+num+"------");
 		generateList.add(num);
 		doneNumbers.put(num, "true");

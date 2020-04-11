@@ -12,7 +12,7 @@ $(document).ready(function(){
 	console.log(numberIpVal);
 	$.ajax({
 		type: 'POST',
-		url: '/generate',
+		url: '/housie/generate',
 		data: JSON.stringify ({number: numberIpVal}),
 		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
 		success: function(data) { console.log("success "+numberIpVal); },

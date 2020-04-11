@@ -7,12 +7,14 @@ import java.util.Random;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
+@RequestMapping("/housie")
 public class MyController {
 	
 	Random r = new Random();
@@ -22,12 +24,9 @@ public class MyController {
 	 TypeReference<HashMap<String,String>> typeRef 
 	            = new TypeReference<HashMap<String,String>>() {};
 
-	@GetMapping("/bla")
+	@RequestMapping("/")
 	public String test() {
-		System.out.println("aaya");
-		String str="hello world"+System.currentTimeMillis();
-		System.out.println("gaya "+str);
-		return str;
+		return "housie.html";
 	}
 	
 	@GetMapping("/status")
