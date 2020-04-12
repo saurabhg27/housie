@@ -13,11 +13,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class HousieBoard {
+	
+	private static final String INVALID_KEY_MESSAGE = "ERROR: Wrong key entered, jyada shhanpatti nahi ( ͡° ͜ʖ ͡°)";
+	
 	private static List<Integer> generateList ;
 	
 	private static Map<Integer,String> doneNumbers;
 	
 	private static Map<Integer,String> lastUpdatedMap;
+	private static List<String> messages;
 	private static Random random;
 	private static String secretKey;
 	
@@ -38,6 +42,7 @@ public class HousieBoard {
 		generateList = new ArrayList<>();
 		doneNumbers = new ConcurrentHashMap<>(100);
 		lastUpdatedMap = new HashMap<>();
+		messages= new ArrayList<>();
 		random = new Random();
 		
 		secretKey = System.getenv("secretKey");
@@ -76,18 +81,25 @@ public class HousieBoard {
 	
 	private static void updateLastUpdatedMap() {
 		try {
-		lastUpdatedMap = new HashMap<>(105);
-		System.out.println(generateList);
-		lastUpdatedMap.putAll(doneNumbers);
-		//lastUpdatedMap.put(999, generateList.toString());
-		int lastIndex=generateList.size()-1;
-		
-		String str="";
-		for(int i =5;lastIndex>=0&&i>0;lastIndex--,i--) {
-			str = str + generateList.get(lastIndex) +", ";
-		}
-		
-		lastUpdatedMap.put(998, str);
+			lastUpdatedMap = new HashMap<>(105);
+			System.out.println(generateList);
+			lastUpdatedMap.putAll(doneNumbers);
+			//lastUpdatedMap.put(999, generateList.toString());
+			int lastIndex=generateList.size()-1;
+
+			String str="";
+			for(int i =5;lastIndex>=0&&i>0;lastIndex--,i--) {
+				str = str + generateList.get(lastIndex) +", ";
+			}
+
+			lastUpdatedMap.put(998, str);
+			System.out.println("message list "+messages);
+			if(messages.size()>0) {
+				String msg=messages.get(messages.size()-1);
+
+				System.out.println("aaya aaaaaaaaaa"+msg);
+				lastUpdatedMap.put(999, msg);
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -170,8 +182,8 @@ public class HousieBoard {
 	}
 
 	public static String deleteNumber(Integer number, String key) {
-		if(!secretKey.equals(key)) {
-			return "ERROR: Wrong key entered, jyada shhanpatti nahi ( ͡° ͜ʖ ͡°)";
+		if(!isKeyCorrect(key)) {
+			return INVALID_KEY_MESSAGE;
 		}
 		
 		if(doneNumbers.get(number).equalsIgnoreCase("false")) {
@@ -182,6 +194,28 @@ public class HousieBoard {
 		System.out.println("deleted number : "+number);
 		updateLastUpdatedMap();
 		return "deleted number :"+number;
+	}
+
+	public static String addMessage(String message, String key) {
+		if(!isKeyCorrect(key)) {
+			return INVALID_KEY_MESSAGE;
+		}
+		messages.add(message);
+		System.out.println("added message "+message);
+		updateLastUpdatedMap();
+		return "Added message successfully";
+	}
+	
+	private static boolean isKeyCorrect(String key) {
+		if (key == null || key.isBlank()) {
+			return false;
+		}
+		return secretKey.equals(key);
+	}
+	
+	private static boolean isValidString(String str) {
+		if(str == null || str.isBlank()) return false;
+		return true;
 	}
 
 }

@@ -36,6 +36,26 @@ public class MyController {
 		return HousieBoard.getLastUpdatedMap();
 	}
 	
+	@PostMapping("/showMessage")
+	public Map<String, String> showMessage(@RequestBody String data) {
+		Map<String, String> map = new HashMap<String, String>();
+
+		String statusMessage = "Some error while showing message";
+		try {
+			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
+			String message=jsonData.get("msg");
+			String key = jsonData.get("key");
+			System.out.println("key is "+key);
+			statusMessage=HousieBoard.addMessage(message,key);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		map.put("resp", statusMessage);
+		return map;
+	}
+	
 	@PostMapping("/generate")
 	public Map<String,String> takeAnInputNumber(@RequestBody String data)	{
 		Map<String,String> map = new HashMap<String, String>();

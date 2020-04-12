@@ -1,115 +1,146 @@
 <!doctype html>
 <html>
-<head>
-<script src="jquery-3.5.0.min.js"></script>
-<script>
-console.log("LOADED");
-$(document).ready(function(){
-
-	window.onbeforeunload = function (e) {
-        e = e || window.event;
-        var returnString = 'Are you sure?';
-        if (e) {
-            e.returnValue = returnString;
-        }
-        return returnString;
-	};
-
-
-  $("#generateBut").click(function(){
-    
-	console.log("Generate CLICKED");	
-	var numberIpVal = $("#numberInput").val();
-	var secKey = $("#secretKey").val();
-	console.log(numberIpVal,secKey);
-	$.ajax({
-		type: 'POST',
-		url: '/housie/generate',
-		data: JSON.stringify ({number: numberIpVal,key:secKey}),
-		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-		success: function(response) { 
-			//console.log("success "+response); 
-			$("#generateStatus").html(response["resp"]);
-		},
-		contentType: "application/json",
-		dataType: 'json'
-	});
-	
-  });
-  
-  $("#autoGenerateButton").click(function(){
-	var secKey = $("#secretKey").val();
-	$.ajax({
-		type: 'POST',
-		url: '/housie/autoGenerate',
-		data: JSON.stringify ({key:secKey}),
-		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-		success: function(response) { 
-			//console.log("success "+response); 
-			$("#generateStatus").html(response["resp"]);
-		},
-		contentType: "application/json",
-		dataType: 'json'
-	});
-  });
-  
-  $("#resetBoard").click(function(){
-	console.log("reset clicked ")
-	
-	var secretKey = prompt("Enter Secret Key");
-	
-	$.ajax({
-		type: 'POST',
-		url: '/housie/resetBoard',
-		data: JSON.stringify ({key: secretKey}),
-		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-		success: function(response) { 
-			//console.log("success resetBoard",response); 
-			alert(response["resp"])
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			console.log(jqXHR,textStatus, errorThrown);
-			//alert("Unable to Reset Board");
-		},
-		contentType: "application/json",
-		dataType: 'json'
-	});
-  
-  
-  });
-  
-  $("#delNumBut").click(function(){
-	var secKey = $("#secretKey").val();
-	var toBeDelNumber = prompt("Enter number to be deleted");
-	$.ajax({
-		type: 'POST',
-		url: '/housie/deleteNum',
-		data: JSON.stringify ({number: toBeDelNumber,key:secKey}),
-		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-		success: function(response) { 
-			//console.log("success "+response); 
-			$("#generateStatus").html(response["resp"]);
-		},
-		contentType: "application/json",
-		dataType: 'json'
-	});
-  });
-  
-});
-
-</script>
-</head>
-<body>
-<h1>HOUSIE ADMIN</h1>
-Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key"><br><br><br>
-<input type="text" id="numberInput" placeholder="Number">
-<button id="generateBut">Generate !!</button>
-<div id="generateStatus"></div>
-<br><br>
-<button id="delNumBut">Delete Number !!</button>
-<br><br>
-<div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
-<br><br>
-<div><button id="resetBoard">Reset The Game</button></div>
-</body>
+   <head>
+      <script src="jquery-3.5.0.min.js"></script>
+      <style type="text/css">
+         body {
+         font-family: Arial, Helvetica, sans-serif;
+         }
+         button {
+         padding:0.35em 1.2em;
+         }
+         #resetBoard {
+         background-color: #EE716B;
+         }	
+      </style>
+      <script>
+         console.log("LOADED");
+         $(document).ready(function(){
+         
+         	window.onbeforeunload = function (e) {
+                 e = e || window.event;
+                 var returnString = 'Are you sure?';
+                 if (e) {
+                     e.returnValue = returnString;
+                 }
+                 return returnString;
+         	};
+         
+         
+           $("#generateBut").click(function(){
+             
+         	console.log("Generate CLICKED");	
+         	var numberIpVal = $("#numberInput").val();
+         	var secKey = $("#secretKey").val();
+         	console.log(numberIpVal,secKey);
+         	$.ajax({
+         		type: 'POST',
+         		url: '/housie/generate',
+         		data: JSON.stringify ({number: numberIpVal,key:secKey}),
+         		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+         		success: function(response) { 
+         			//console.log("success "+response); 
+         			$("#generateStatus").html(response["resp"]);
+         		},
+         		contentType: "application/json",
+         		dataType: 'json'
+         	});
+         	
+           });
+           
+           $("#autoGenerateButton").click(function(){
+         	var secKey = $("#secretKey").val();
+         	$.ajax({
+         		type: 'POST',
+         		url: '/housie/autoGenerate',
+         		data: JSON.stringify ({key:secKey}),
+         		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+         		success: function(response) { 
+         			//console.log("success "+response); 
+         			$("#generateStatus").html(response["resp"]);
+         		},
+         		contentType: "application/json",
+         		dataType: 'json'
+         	});
+           });
+           
+           $("#resetBoard").click(function(){
+         	console.log("reset clicked ")
+         	
+         	var secretKey = prompt("Enter Secret Key");
+         	
+         	$.ajax({
+         		type: 'POST',
+         		url: '/housie/resetBoard',
+         		data: JSON.stringify ({key: secretKey}),
+         		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+         		success: function(response) { 
+         			//console.log("success resetBoard",response); 
+         			alert(response["resp"])
+         		},
+         		error: function(jqXHR, textStatus, errorThrown) {
+         			console.log(jqXHR,textStatus, errorThrown);
+         			//alert("Unable to Reset Board");
+         		},
+         		contentType: "application/json",
+         		dataType: 'json'
+         	});
+           
+           
+           });
+           
+           $("#delNumBut").click(function(){
+         	var secKey = $("#secretKey").val();
+         	var toBeDelNumber = prompt("Enter number to be deleted");
+         	$.ajax({
+         		type: 'POST',
+         		url: '/housie/deleteNum',
+         		data: JSON.stringify ({number: toBeDelNumber,key:secKey}),
+         		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+         		success: function(response) { 
+         			//console.log("success "+response); 
+         			$("#generateStatus").html(response["resp"]);
+         		},
+         		contentType: "application/json",
+         		dataType: 'json'
+         	});
+           });
+            $("#showMsgBut").click(function(){
+           console.log("clllllllllllll");
+           var secKey = $("#secretKey").val();
+           var mess = prompt("Enter Message");
+           $.ajax({
+         		type: 'POST',
+         		url: '/housie/showMessage',
+         		data: JSON.stringify ({msg:mess,key:secKey}),
+         		//data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+         		success: function(response) { 
+         			//console.log("success "+response); 
+         			$("#generateStatus").html(response["resp"]);
+         		},
+         		contentType: "application/json",
+         		dataType: 'json'
+         	});
+           });
+         });
+         
+          
+         
+      </script>
+   </head>
+   <body>
+      <h1>HOUSIE ADMIN</h1>
+      Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key"><br><br><br>
+      <input type="text" id="numberInput" placeholder="Number">
+      <button id="generateBut">Generate !!</button>
+      <div id="generateStatus"></div>
+      <br><br>
+      <button id="delNumBut">Delete Number !!</button>
+      <br><br>
+      <div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
+      <br><br>
+      <div><button id="showMsgBut">Show Message !!</button></div>
+      <br><br>
+      <div><button id="resetBoard">Reset The Game</button></div>
+   </body>
 </html>
