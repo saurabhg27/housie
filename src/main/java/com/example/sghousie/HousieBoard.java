@@ -150,9 +150,9 @@ public class HousieBoard {
 		System.out.println("Loaded form disk generateList"+generateList.getClass()+" val --> "+generateList);
 		oo1.close();
 		fis2.close();
-			
 		}catch (Exception e) {
-			e.printStackTrace();
+			System.err.println("Eception while reloading file"+e.getMessage());
+			//e.printStackTrace();
 			init();
 		}
 	}
@@ -180,6 +180,7 @@ public class HousieBoard {
 		doneNumbers.put(number, "false");
 		generateList.remove(generateList.indexOf(number));
 		System.out.println("deleted number : "+number);
+		updateLastUpdatedMap();
 		return "deleted number :"+number;
 	}
 
