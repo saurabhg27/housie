@@ -105,6 +105,10 @@ public class HousieBoard {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void setCustomLastUpdatedMap(Map<Integer,String> marziKaMap) {
+		lastUpdatedMap = marziKaMap;
+	}
 
 	public static String resetBoard(String key) {
 		
