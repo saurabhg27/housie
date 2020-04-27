@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@Controller
+//@Controller
 public class FileController {
 	
 	private static final String UPLOAD_FOLDER = "";
 
-	@PostMapping("/upload")
+	//@PostMapping("/upload")
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		System.out.println("aaaaaaaaaaa");
 		if (file.isEmpty()) {
@@ -42,7 +42,7 @@ public class FileController {
 		return "redirect:/uploadStatus";
 	}
 
-	@GetMapping("/uploadStatus")
+	//@GetMapping("/uploadStatus")
 	public String uploadStatus() {
 		return "message";
 	}
