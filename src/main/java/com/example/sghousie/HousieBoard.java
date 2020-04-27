@@ -82,7 +82,7 @@ public class HousieBoard {
 	private static void updateLastUpdatedMap() {
 		try {
 			lastUpdatedMap = new HashMap<>(105);
-			System.out.println(generateList);
+			//System.out.println(generateList);
 			lastUpdatedMap.putAll(doneNumbers);
 			//lastUpdatedMap.put(999, generateList.toString());
 			int lastIndex=generateList.size()-1;
@@ -108,7 +108,7 @@ public class HousieBoard {
 
 	public static String resetBoard(String key) {
 		
-		System.out.println("secretkey: "+secretKey+" userKey: "+key);
+		System.out.println("reset board request secretkey: "+secretKey+" userKey: "+key);
 		String status="Unknown error";
 		
 		try {
@@ -172,7 +172,7 @@ public class HousieBoard {
 	public static String autoGenerate(String key) {
 
 		List<Integer> remainingNos = doneNumbers.entrySet().stream().filter(e->e.getValue().equalsIgnoreCase("false")).map(e->e.getKey()).collect(Collectors.toList());
-		System.out.println("Numbers remaining = "+remainingNos.size());
+		//System.out.println("Numbers remaining = "+remainingNos.size());
 		if(remainingNos.size()<=0) {
 			return "No remaining numbers";
 		}
