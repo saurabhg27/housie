@@ -62,8 +62,8 @@ public class HousieBoard {
 			System.out.println("invalid num in add to both : "+num);
 			return "ERROR: Number should be between 1 - 90";
 		}
-		if(!secretKey.equals(key)) {
-			return "ERROR: Wrong key entered, jyada shhanpatti nahi ( ͡° ͜ʖ ͡°)";
+		if(!isKeyCorrect(key)) {
+			return INVALID_KEY_MESSAGE;
 		}
 		System.out.println("------ adding number : "+num+"------");
 		if(doneNumbers.get(num).equalsIgnoreCase("true")) {
@@ -77,6 +77,10 @@ public class HousieBoard {
 	
 	public static Map<Integer,String> getLastUpdatedMap() {
 		return lastUpdatedMap;
+	}
+	
+	public static List<Integer> getGenerateList() {
+		return generateList;
 	}
 	
 	private static void updateLastUpdatedMap() {
@@ -93,7 +97,7 @@ public class HousieBoard {
 			}
 
 			lastUpdatedMap.put(998, str);
-			System.out.println("message list "+messages);
+			//System.out.println("message list "+messages);
 			if(messages.size()>0) {
 				String msg=messages.get(messages.size()-1);
 
@@ -116,7 +120,7 @@ public class HousieBoard {
 		String status="Unknown error";
 		
 		try {
-			if(secretKey.equals(key)){
+			if(isKeyCorrect(key)){
 				init();
 				status = "reset ho gaya board";
 				saveBoardStatus();
@@ -151,24 +155,25 @@ public class HousieBoard {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	private static void reloadfromDisk() {
 		try {
-		FileInputStream fis = new FileInputStream("board.bin");
-		ObjectInputStream oo = new ObjectInputStream(fis);
-		doneNumbers = (Map<Integer, String>) oo.readObject();
-		System.out.println("Loaded form disk doneNumbers"+doneNumbers.getClass()+" val --> "+doneNumbers);
-		oo.close();
-		fis.close();
-		
-		FileInputStream fis2 = new FileInputStream("numberOrder.bin");
-		ObjectInputStream oo1 = new ObjectInputStream(fis2);
-		generateList=(List<Integer>) oo1.readObject();
-		System.out.println("Loaded form disk generateList"+generateList.getClass()+" val --> "+generateList);
-		oo1.close();
-		fis2.close();
-		}catch (Exception e) {
-			System.err.println("Eception while reloading file"+e.getMessage());
-			//e.printStackTrace();
+			FileInputStream fis = new FileInputStream("board.bin");
+			ObjectInputStream oo = new ObjectInputStream(fis);
+			doneNumbers = (Map<Integer, String>) oo.readObject();
+			System.out.println("Loaded form disk doneNumbers" + doneNumbers.getClass() + " val --> " + doneNumbers);
+			oo.close();
+			fis.close();
+
+			FileInputStream fis2 = new FileInputStream("numberOrder.bin");
+			ObjectInputStream oo1 = new ObjectInputStream(fis2);
+			generateList = (List<Integer>) oo1.readObject();
+			System.out.println("Loaded form disk generateList" + generateList.getClass() + " val --> " + generateList);
+			oo1.close();
+			fis2.close();
+		} catch (Exception e) {
+			System.err.println("Eception while reloading file" + e.getMessage());
+			// e.printStackTrace();
 			init();
 		}
 	}
@@ -214,7 +219,7 @@ public class HousieBoard {
 		if (key == null || key.isBlank()) {
 			return false;
 		}
-		return secretKey.equals(key);
+		return secretKey.equalsIgnoreCase(key);
 	}
 	
 	private static boolean isValidString(String str) {

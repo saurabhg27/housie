@@ -1,6 +1,7 @@
 package com.example.sghousie;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -16,26 +17,31 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 @RequestMapping("/")
 public class MyController {
-	
+
 	Random r = new Random();
-	
-	 ObjectMapper mapper = new ObjectMapper(); 
-	  
-	 TypeReference<HashMap<String,String>> typeRef 
-	            = new TypeReference<HashMap<String,String>>() {};
+
+	ObjectMapper mapper = new ObjectMapper(); 
+
+	TypeReference<HashMap<String,String>> typeRef 
+	= new TypeReference<HashMap<String,String>>() {};
 
 	@GetMapping("/test")
 	public String lastStatus() {
 		int number = r.nextInt(89)+1;
 		return ""+number;
 	}
-	
+
 	@GetMapping("/map")
 	public Map<Integer,String> getCompleteStatus(){
-		
+
 		return HousieBoard.getLastUpdatedMap();
 	}
-	
+
+	@GetMapping("/list")
+	public List<Integer> getOrderList() {
+		return HousieBoard.getGenerateList();
+	}
+
 	@PostMapping("/showMessage")
 	public Map<String, String> showMessage(@RequestBody String data) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -47,7 +53,7 @@ public class MyController {
 			String key = jsonData.get("key");
 			System.out.println("key is "+key);
 			statusMessage=HousieBoard.addMessage(message,key);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,7 +61,7 @@ public class MyController {
 		map.put("resp", statusMessage);
 		return map;
 	}
-	
+
 	@PostMapping("/generate")
 	public Map<String,String> takeAnInputNumber(@RequestBody String data)	{
 		Map<String,String> map = new HashMap<String, String>();
@@ -87,7 +93,7 @@ public class MyController {
 		return map;
 
 	}
-	
+
 	@PostMapping("/deleteNum")
 	public Map<String,String> deleteNum(@RequestBody String data) {
 		Map<String,String> map = new HashMap<String, String>();
@@ -96,7 +102,7 @@ public class MyController {
 		try {
 			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
 			String thisTimeNumber = jsonData.get("number");
-			
+
 			if(thisTimeNumber==null||thisTimeNumber.isBlank()) {
 				statusMessage = "koi number nahi daala, dhyaan se number daalo bhai";	
 			} else {
@@ -105,15 +111,15 @@ public class MyController {
 				System.out.println("key is "+key);
 				statusMessage=HousieBoard.deleteNumber(number,key);	
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		map.put("resp", statusMessage);
 		return map;
-		
+
 	}
-	
+
 	@PostMapping("/autoGenerate")
 	public Map<String,String> autoGenerateNumber(@RequestBody String data) {
 		Map<String,String> map = new HashMap<String, String>();
@@ -131,8 +137,8 @@ public class MyController {
 		return map;
 
 	}
-	
-	
+
+
 	@PostMapping("/resetBoard")
 	public Map<String,String> resetBoard(@RequestBody String data) {
 		Map<String,String> map = new HashMap<String, String>();
@@ -143,15 +149,15 @@ public class MyController {
 			HashMap<String, String> jsonData = mapper.readValue(data, typeRef);
 			String key = jsonData.get("key");
 			System.out.println("key is "+key);
-			
+
 			statusMessage=HousieBoard.resetBoard(key);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		map.put("resp", statusMessage);
 		return map;
-		
+
 	}
-	
+
 }

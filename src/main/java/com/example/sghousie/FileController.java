@@ -8,15 +8,27 @@ import java.nio.file.Paths;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-//@Controller
+@Controller
 public class FileController {
 	
 	private static final String UPLOAD_FOLDER = "";
 
+	@RequestMapping("/admin")
+	public String admin() {
+		return "admin.html";
+	}
+	
+	@RequestMapping("/easy")
+	public String bla() {
+		return "adminauto.html";
+	}
+	
+	
 	//@PostMapping("/upload")
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		System.out.println("aaaaaaaaaaa");

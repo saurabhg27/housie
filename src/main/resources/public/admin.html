@@ -25,13 +25,19 @@
       }
    </style>
    <script>
-
+      $(document).ready(function () {
+         $("#saveKeyButton").click(function () {
+            $("#keyDiv").toggle();
+         });
+      });
    </script>
 </head>
 
 <body>
    <h1>HOUSIE ADMIN</h1>
-   Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key"><br><br><br>
+   <div id="keyDiv">Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key"></div>
+      <button id="saveKeyButton">Save Key !!</button>
+   <br><br>
    <input type="text" id="numberInput" placeholder="Number">
    <button id="generateBut">Generate !!</button>
    <div id="generateStatus"></div>

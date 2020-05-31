@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+
+<head>
+   <script src="jquery-3.5.0.min.js"></script>
+   <script src="admin.js"></script>
+   <style type="text/css">
+      body {
+         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      button {
+         padding: 0.35em 1.2em;
+      }
+
+      button[disabled=disabled],
+      button:disabled {
+         border: 1px solid #999999;
+         background-color: #cccccc;
+         color: #666666;
+      }
+      .bigbutton {
+         padding: 10.35em 11.2em;
+         font-size: 20px;
+      }
+      #resetBoard {
+         background-color: #EE716B;
+      }
+   </style>
+   <script>
+      $(document).ready(function () {
+            $("#saveKeyBut").click(function () {
+               $("#keyInputDiv").toggle();
+            });
+         });
+   </script>
+</head>
+
+<body>
+   <h1>EASY HOUSIE ADMIN</h1>
+   <div id="keyInputDiv">Key<input type="text" id="secretKey" placeholder="Secret Key"><br><br><button id="saveKeyBut">Save Key!</button></div> 
+   
+   <div id="generateStatus"></div>
+   <br><br>
+   <div><button class="bigbutton" id="autoGenerateButton">Auto Generate Number !!</button></div>
+   <br><br>
+</body>
+
+</html>
