@@ -1,4 +1,4 @@
-package com.example.sghousie;
+package stuff;
 
 import java.util.ArrayList;
 import java.util.Collections;
