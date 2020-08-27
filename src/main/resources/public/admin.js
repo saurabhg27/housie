@@ -24,7 +24,7 @@ $(document).ready(function () {
         var secKey = $("#secretKey").val();
         $.ajax({
             type: 'POST',
-            url: '/housie/autoGenerate',
+            url: '/autoGenerate',
             data: JSON.stringify({ key: secKey }),
             //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
             success: function (response) {
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/housie/resetBoard',
+            url: '/resetBoard',
             data: JSON.stringify({ key: secretKey }),
             //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
             success: function (response) {
@@ -66,7 +66,7 @@ $(document).ready(function () {
         var toBeDelNumber = prompt("Enter number to be deleted");
         $.ajax({
             type: 'POST',
-            url: '/housie/deleteNum',
+            url: '/deleteNum',
             data: JSON.stringify({ number: toBeDelNumber, key: secKey }),
             //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
             success: function (response) {
@@ -83,7 +83,7 @@ $(document).ready(function () {
         var mess = prompt("Enter Message");
         $.ajax({
             type: 'POST',
-            url: '/housie/showMessage',
+            url: '/showMessage',
             data: JSON.stringify({ msg: mess, key: secKey }),
             //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
             success: function (response) {
@@ -117,7 +117,7 @@ $(document).ready(function () {
 
 function setAdminTableStatus(){
     $.ajax({
-        url: "/housie/map",
+        url: "/map",
         success: function (result) {
             //console.log(result);
             for (var key in result) {
@@ -164,7 +164,7 @@ function sendGenerateReq(nm) {
     console.log(nm, secKey);
     $.ajax({
         type: 'POST',
-        url: '/housie/generate',
+        url: '/generate',
         data: JSON.stringify({ number: nm, key: secKey }),
         success: function (response) {
             //console.log("success "+response); 
