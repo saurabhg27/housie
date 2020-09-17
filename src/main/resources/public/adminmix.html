@@ -26,6 +26,7 @@
          min-width: 15px;
          color: #E7CBC5;
       }
+
       td.selected {
          color: #E4EAE3;
          background-color: #27A500;
@@ -33,6 +34,7 @@
          font-weight: bold;
          text-shadow: 1px 1px #80947D;
       }
+
       #resetBoard {
          background-color: #EE716B;
       }
@@ -45,7 +47,32 @@
          $("#checkStatusTable").click(function () {
             setCheckTableStatus();
          });
+         $("#addRowBut").click(function () {
+            var inputRowCsv = $("#inputRowCsv").val();
+            addCheckRow(inputRowCsv);
+         });
+         $("#delLastRowBut").click(function () {
+            var table = document.getElementById("checkNumberTable");
+            var rowCount = table.rows.length;
+            table.deleteRow(rowCount - 1);
+         });
+         addCheckRow(",16,,34,,53,,74,81");
+         addCheckRow("8,,29,,47,,65,,88");
+         addCheckRow(",19,,39,,59,,76,90");
       });
+      function addCheckRow(inputRowCsv) {
+
+         console.log(inputRowCsv);
+         var inpRowCsvArr=inputRowCsv.split(',');
+         var rowStr = "<tr>";
+         for (i = 0; i < inpRowCsvArr.length; i++) {
+            var number = inpRowCsvArr[i];
+            rowStr = rowStr + "<td class=cell" + number + ">" + number + "</td>";
+         }
+         rowStr = rowStr + "</tr>";
+         //console.log(rowStr);
+         $('#checkNumberTable tr:last').after(rowStr);
+      }
       function setCheckTableStatus() {
          $.ajax({
             url: "/map",
@@ -80,6 +107,8 @@
    <h1>HOUSIE ADMIN</h1>
    <div id="keyDiv">Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key">
       <div><button id="resetBoard">Reset The Game</button></div><br>
+      <input type="text" id="inputRowCsv" placeholder="Row CSV"><button id="addRowBut">AddRow</button>
+      <button id="delLastRowBut">DeleteLastAddRow</button><br>
       <button id="saveKeyButton">Save Key !!</button>
    </div>
    <div id="generateStatus"></div>
@@ -90,44 +119,12 @@
       <button id="checkStatusTable">Refresh Ticket !!</button><br>
       <table id="checkNumberTable">
          <tbody>
-            <tr>
-               <td class="cell0"></td>
-               <td class="cell16">16</td>
-               <td class="cell0"></td>
-               <td class="cell34">34</td>
-               <td class="cell0"></td>
-               <td class="cell53">53</td>
-               <td class="cell0"></td>
-               <td class="cell74">74</td>
-               <td class="cell81">81</td>
-            </tr>
-            <tr>
-               <td class="cell8">8</td>
-               <td class="cell0"></td>
-               <td class="cell29">29</td>
-               <td class="cell0"></td>
-               <td class="cell47">47</td>
-               <td class="cell0"></td>
-               <td class="cell65">65</td>
-               <td class="cell0"></td>
-               <td class="cell88">88</td>
-            </tr>
-            <tr>
-               <td class="cell0"></td>
-               <td class="cell19">19</td>
-               <td class="cell0"></td>
-               <td class="cell39">39</td>
-               <td class="cell0"></td>
-               <td class="cell59">59</td>
-               <td class="cell0"></td>
-               <td class="cell76">76</td>
-               <td class="cell90">90</td>
-            </tr>
+            <tr> </tr>
          </tbody>
       </table>
    </div>
-   
-   
+
+
 </body>
 
 </html>
