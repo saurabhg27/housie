@@ -28,6 +28,11 @@ public class FileController {
 		return "adminauto.html";
 	}
 	
+	@RequestMapping("/mix")
+	public String bla() {
+		return "adminmix.html";
+	}
+	
 	
 	//@PostMapping("/upload")
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {

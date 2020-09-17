@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+
+<head>
+   <script src="jquery-3.5.0.min.js"></script>
+   <script src="admin.js"></script>
+   <style type="text/css">
+      body {
+         font-family: Arial, Helvetica, sans-serif;
+      }
+
+      button {
+         padding: 0.35em 1.2em;
+      }
+
+      table,
+      tr,
+      td {
+         border-collapse: collapse;
+         border: solid 1px #999;
+         padding: 0.5rem;
+      }
+
+      td {
+         min-width: 10px;
+         color: #E7CBC5;
+      }
+      td.selected {
+         color: #E4EAE3;
+         background-color: #27A500;
+         border: 2px solid black;
+         font-weight: bold;
+         text-shadow: 1px 1px #80947D;
+      }
+      #resetBoard {
+         background-color: #EE716B;
+      }
+   </style>
+   <script>
+      $(document).ready(function () {
+         $("#saveKeyButton").click(function () {
+            $("#keyDiv").toggle();
+         });
+         $("#checkStatusTable").click(function () {
+            setCheckTableStatus();
+         });
+      });
+      function setCheckTableStatus() {
+         $.ajax({
+            url: "/map",
+            success: function (result) {
+               //console.log(result);
+               for (var key in result) {
+                  if (result.hasOwnProperty(key)) {
+                     var val = result[key];
+                     //console.log(key);
+                     //console.log(val);
+                     if (val == "true") {
+                        $('td.cell' + key).addClass('selected');
+
+                     }
+                     if (val == "false") {
+                        $('td.cell' + key).removeClass('selected');
+                     }
+                  }
+
+               }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+               console.log(textStatus, errorThrown);
+            }
+         });
+
+      }
+   </script>
+</head>
+
+<body>
+   <h1>HOUSIE ADMIN</h1>
+   <div id="keyDiv">Secret Key(Do not Remove)<input type="text" id="secretKey" placeholder="Secret Key">
+      <div><button id="resetBoard">Reset The Game</button></div><br>
+      <button id="saveKeyButton">Save Key !!</button>
+   </div>
+   <div id="generateStatus"></div>
+   <br><br>
+   <div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
+   <br><br>
+   <div id="statusTableDiv">
+      <button id="checkStatusTable">Refresh Ticket !!</button><br>
+      <table id="checkNumberTable">
+         <tbody>
+            <tr>
+               <td class="cell0">0</td>
+               <td class="cell16">16</td>
+               <td class="cell0">0</td>
+               <td class="cell34">34</td>
+               <td class="cell0">0</td>
+               <td class="cell53">53</td>
+               <td class="cell0">0</td>
+               <td class="cell74">74</td>
+               <td class="cell81">81</td>
+            </tr>
+            <tr>
+               <td class="cell8">8</td>
+               <td class="cell0">0</td>
+               <td class="cell29">29</td>
+               <td class="cell0">0</td>
+               <td class="cell47">47</td>
+               <td class="cell0">0</td>
+               <td class="cell65">65</td>
+               <td class="cell0">0</td>
+               <td class="cell88">88</td>
+            </tr>
+            <tr>
+               <td class="cell0">0</td>
+               <td class="cell19">19</td>
+               <td class="cell0">0</td>
+               <td class="cell39">39</td>
+               <td class="cell0">0</td>
+               <td class="cell59">59</td>
+               <td class="cell0">0</td>
+               <td class="cell76">76</td>
+               <td class="cell90">90</td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   
+   
+</body>
+
+</html>
