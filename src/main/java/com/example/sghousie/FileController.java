@@ -24,12 +24,12 @@ public class FileController {
 	}
 	
 	@RequestMapping("/easy")
-	public String bla() {
+	public String easy() {
 		return "adminauto.html";
 	}
 	
 	@RequestMapping("/mix")
-	public String bla() {
+	public String mix() {
 		return "adminmix.html";
 	}
 	
