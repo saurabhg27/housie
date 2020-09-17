@@ -41,6 +41,12 @@
    </style>
    <script>
       $(document).ready(function () {
+         $("#adminMixAutoGenerateButton").click(function () {
+            var secKey = $("#secretKey").val();
+            sendAutoGenerateRequest(secKey);
+            setCheckTableStatus();
+         });
+
          $("#saveKeyButton").click(function () {
             $("#keyDiv").toggle();
          });
@@ -63,7 +69,7 @@
       function addCheckRow(inputRowCsv) {
 
          console.log(inputRowCsv);
-         var inpRowCsvArr=inputRowCsv.split(',');
+         var inpRowCsvArr = inputRowCsv.split(',');
          var rowStr = "<tr>";
          for (i = 0; i < inpRowCsvArr.length; i++) {
             var number = inpRowCsvArr[i];
@@ -113,7 +119,7 @@
    </div>
    <div id="generateStatus"></div>
    <br><br>
-   <div><button id="autoGenerateButton">Auto Generate Number !!</button></div>
+   <div><button id="adminMixAutoGenerateButton">Auto Generate Number !!</button></div>
    <br><br>
    <div id="statusTableDiv">
       <button id="checkStatusTable">Refresh Ticket !!</button><br>

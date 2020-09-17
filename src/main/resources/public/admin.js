@@ -22,18 +22,7 @@ $(document).ready(function () {
 
     $("#autoGenerateButton").click(function () {
         var secKey = $("#secretKey").val();
-        $.ajax({
-            type: 'POST',
-            url: '/autoGenerate',
-            data: JSON.stringify({ key: secKey }),
-            //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
-            success: function (response) {
-                //console.log("success "+response); 
-                $("#generateStatus").html(response["resp"]);
-            },
-            contentType: "application/json",
-            dataType: 'json'
-        });
+        sendAutoGenerateRequest(secKey);
     });
 
     $("#resetBoard").click(function () {
@@ -114,6 +103,21 @@ $(document).ready(function () {
     });
 
 });
+
+function sendAutoGenerateRequest(secretKey){
+    $.ajax({
+        type: 'POST',
+        url: '/autoGenerate',
+        data: JSON.stringify({ key: secretKey }),
+        //data: '{"name":"jonas"}', // or JSON.stringify ({name: 'jonas'}),
+        success: function (response) {
+            //console.log("success "+response); 
+            $("#generateStatus").html(response["resp"]);
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+}
 
 function setAdminTableStatus(){
     $.ajax({
