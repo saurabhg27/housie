@@ -90,12 +90,13 @@ public class HousieBoard {
 			lastUpdatedMap.putAll(doneNumbers);
 			//lastUpdatedMap.put(999, generateList.toString());
 			int lastIndex=generateList.size()-1;
-
+			lastUpdatedMap.put(997, ""+generateList.get(lastIndex));
+			//lastUpdatedMap.put(997, "27");
 			String str="";
 			for(int i =5;lastIndex>=0&&i>0;lastIndex--,i--) {
 				str = str + generateList.get(lastIndex) +", ";
 			}
-
+			
 			lastUpdatedMap.put(998, str);
 			//System.out.println("message list "+messages);
 			if(messages.size()>0) {

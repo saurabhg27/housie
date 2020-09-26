@@ -33,6 +33,11 @@ public class FileController {
 		return "adminmix.html";
 	}
 	
+	@RequestMapping("/mast")
+	public String speechboard() {
+		return "speechboard.html";
+	}
+	
 	
 	//@PostMapping("/upload")
 	public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
